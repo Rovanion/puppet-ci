@@ -16,7 +16,7 @@ Apache 2.0
 
 Contact
 -------
-Souman Trivedi - souman.trivedi@ordnancesurve.co.uk
+Souman Trivedi - souman.trivedi@arkayaventure.co.uk
 
 Support
 -------
