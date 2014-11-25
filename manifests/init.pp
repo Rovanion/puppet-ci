@@ -62,8 +62,8 @@ class puppetci {
   }
 
   class {'jenkins':
-    lts  => 0,
-    repo => 1,
+    lts  => true,
+    repo => true,
   }
 
   class {'puppetci::plugins':
