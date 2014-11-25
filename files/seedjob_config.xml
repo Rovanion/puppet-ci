@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.26">
+      <scriptText>def reposApi = new URL(&quot;http://stash.ordsvy.gov.uk/rest/api/latest/projects/IN/repos/&quot;)
+def repos = new groovy.json.JsonSlurper().parse(reposApi.newReader())
+repos.values.name.each {
+		def projectName = it
+		def branchesApi = new URL(&quot;http://stash.ordsvy.gov.uk/rest/api/latest/projects/IN/repos/${projectName}/branches/&quot;)
+		def branches = new groovy.json.JsonSlurper().parse(branchesApi.newReader())	
+		branches.values.displayId.each {
+			def branchName = it
+            println branchName  
+				def jobName = &quot;puppet_&quot; + projectName + &quot;_&quot; + branchName.replaceAll(&apos;/&apos;,&apos;_&apos;)
+				println jobName
+				job {
+					name jobName
+					using &quot;Template_puppet_module&quot;
+					scm {
+						git(&quot;http://stash.ordsvy.gov.uk/scm/in/${projectName}.git&quot;,branchName)
+					}
+					steps {
+						
+					}
+				}			
+		}
+	}</scriptText>
+      <usingScriptText>true</usingScriptText>
+      <ignoreExisting>false</ignoreExisting>
+      <removedJobAction>IGNORE</removedJobAction>
+      <lookupStrategy>JENKINS_ROOT</lookupStrategy>
+      <additionalClasspath></additionalClasspath>
+    </javaposse.jobdsl.plugin.ExecuteDslScripts>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

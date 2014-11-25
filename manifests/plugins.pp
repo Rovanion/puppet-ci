@@ -20,4 +20,6 @@ class puppetci::plugins {
   jenkins::plugin {'warnings':}
   jenkins::plugin {'analysis-core':}
   jenkins::plugin {'htmlpublisher':}
+  jenkins::plugin {'job-dsl':}
+  jenkins::plugin {'cloudbees-folder':}
 }
