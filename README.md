@@ -16,13 +16,10 @@ Apache 2.0
 
 Contact
 -------
-Matthew Barr - mbarr@mbarr.net
+Souman Trivedi - souman.trivedi@ordnancesurve.co.uk
 
 Support
 -------
 
-Please log tickets and issues at our [Projects site](https://github.com/matthewbarr/puppet-ci)
-
 Requires: https://github.com/jenkinsci/puppet-jenkins  
-
 
