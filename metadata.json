@@ -1,0 +1,16 @@
+{
+  "author": "Soumen Trivedi",
+  "dependencies": [{
+			"version_requirement": ">= 1.3.0",
+			"name": "rtyler/jenkins"
+		},],
+  "license": "",
+  "name": "soumentrivedi/puppetci",
+  "operatingsystem_support": [],
+  "project_page": "",
+  "requirements": [],
+  "source": "",
+  "summary": "Setting up ruby",
+  "tags": [],
+  "version": "0.1.0"
+}

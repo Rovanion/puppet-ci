@@ -26,18 +26,18 @@ class puppetci {
     ensure => installed,
   }
 
+  package { 'git': ; }
 
-
-  #For displaying fonts
-  package{
-    'dejavu-lgc-sans-mono-fonts':;
-    'dejavu-sans-mono-fonts':;
-  }
-
-  #for Git :)
+  # For RVM
   package {
-    'git':;
-  }
+    'gcc-c++':
+    ;
+
+    'patch':
+    ;
+
+    'readline':
+    ;
 
   #For RVM 
   package {
@@ -61,37 +61,50 @@ class puppetci {
     'libcurl-devel':;
   }
 
-  class {'jenkins':
+  class { 'jenkins':
     lts  => true,
     repo => true,
   }
 
-  class {'puppetci::plugins':
+  class { 'puppetci::plugins':
     require => Package['jenkins'];
   }
+
   file {
     '/var/lib/jenkins/org.jenkinsci.plugins.ghprb.GhprbTrigger.xml':
-    source => 'puppet:///modules/puppetci/org.jenkinsci.plugins.ghprb.GhprbTrigger.xml',
-    replace => 'no', 
-    owner => 'jenkins',
-    group => 'jenkins';
+      source  => 'puppet:///modules/puppetci/org.jenkinsci.plugins.ghprb.GhprbTrigger.xml',
+      replace => 'no',
+      owner   => 'jenkins',
+      group   => 'jenkins';
 
     '/var/lib/jenkins/jobs':
       ensure => directory,
-      owner => 'jenkins',
-      group => 'jenkins';
+      owner  => 'jenkins',
+      group  => 'jenkins';
+
+    '/var/lib/jenkins/jobs/Template_puppet_module':
+      ensure => directory,
+      owner  => 'jenkins',
+      group  => 'jenkins';
+
+    '/var/lib/jenkins/jobs/Template_puppet_module/config.xml':
+      ensure  => file,
+      replace => 'no',
+      source  => 'puppet:///modules/puppetci/template_config.xml',
+      owner   => 'jenkins',
+      group   => 'jenkins';
 
     '/var/lib/jenkins/jobs/PuppetCI':
       ensure => directory,
-      owner => 'jenkins',
-      group => 'jenkins';
+      owner  => 'jenkins',
+      group  => 'jenkins';
 
     '/var/lib/jenkins/jobs/PuppetCI/config.xml':
-      ensure => file,
-      replace => 'no', 
-      source => 'puppet:///modules/puppetci/config.xml',
-      owner => 'jenkins',
-      group => 'jenkins';
+      ensure  => file,
+      replace => 'no',
+      content  => file('puppetci/seedjob_config.xml'),
+      owner   => 'jenkins',
+      group   => 'jenkins';
   }
 
 }
